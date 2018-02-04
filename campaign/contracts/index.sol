@@ -1,10 +1,25 @@
 pragma solidity ^0.4.17;
 
-contract Campaign {
+// KICKSTARTER CREATOR
+contract kickstarterCreator {
+  address[] public kickstarters;
+
+  function createKickstarter(uint minContribution) public {
+    address newCampaign = new Campaign(minContribution, msg.sender);
+    kickstarters.push(newCampaign);
+  }
+
+  function viewAllKickstarters() public view returns (address[]) {
+    return kickstarters;
+  }
+}
+
+// KICKSTARTER INSTANCE
+contract Kickstarter {
   struct Request {
     string reqDescription;
     uint reqCost;
-    address reqVender;
+    address reqVendor;
     bool reqCompletion;
     uint approvalCount;
     mapping(address => bool) reqApprovals;
@@ -21,8 +36,8 @@ contract Campaign {
     _;
   }
 
-  function Campaign(uint minValue) public {
-    manager = msg.sender;
+  function Kickstarter(uint minValue, address creator) public {
+    manager = creator;
     minContribution = minValue;
   }
 
