@@ -34,10 +34,35 @@ beforeEach(async () => {
 
 describe('kickstarters', () => {
   it('deploys creator and kickstarter contract', () => {
-    // from beforeEach, verify that the contract was deployed
-    // and that both the creator and the newly created
-    // kickstarter has an address
+    // verify creator and kickstarter were created
     assert.ok(creator.options.address);
     assert.ok(kickstarter.options.address);
   });
+
+  it('marks caller as the campaign manager', async () => {
+    const projectOwner = await kickstarter.methods.projectOwner().call();
+    assert.equal(accounts[0], projectOwner);
+  });
+
+  it('allows contributions and marks contributers as approvers', async () => {
+    await kickstarter.methods.contribute().send({
+      from: accounts[1],
+      value: '200'
+    });
+
+    const isContributer = await kickstarter.methods.approvers(accounts[1]).call();
+    assert(isContributer);
+  });
+
+  it('requires minimum contribution', async () => {
+    try {
+      await kickstarter.methods.contribute().send({
+        from: accounts[1],
+        value: '5'
+      });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  })
 });
