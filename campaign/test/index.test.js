@@ -17,16 +17,15 @@ beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
   // deploy contract
   creator = await new web3.eth.Contract(JSON.parse(compiledCreator.interface))
-    .setProvider(provider)
     .deploy({data: compiledCreator.bytecode})
     .send({from: accounts[0], gas: '1000000'});
+
+  creator.setProvider(provider);
   // create a kickstarter from the deployed contract
-  await creator.methods
-    .createKickstarter('100')
+  await creator.methods.createKickstarter('100')
     .send({from: accounts[0], gas: '1000000'});
   // view all kickstarters and select the first one
-  const temp = await creator.methods.viewAllKickstarters().call();
-  kickstarterAddress = temp[0]
+  [kickstarterAddress] = await creator.methods.viewAllKickstarters().call();
   kickstarter = await new web3.eth.Contract(
     JSON.parse(compiledKickstarter.interface),
     kickstarterAddress
