@@ -80,10 +80,10 @@ describe('kickstarters', () => {
     await kickstarter.methods.createRequest('A', web3.utils.toWei('5', 'ether'), accounts[1])
       .send({from: accounts[0], gas: '1000000'});
 
-    await kickstarter.method.approveRequest(0)
+    await kickstarter.methods.approveRequest(0)
       .send({from: accounts[0], gas: '1000000'});
 
-    await kickstarter.method.finalizeRequest(0)
+    await kickstarter.methods.finalizeRequest(0)
       .send({from: accounts[0], gas: '1000000'});
 
     let balance = await web3.eth.getBalance(accounts[1]);
