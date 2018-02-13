@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import creator from '../ethereum/creator';
+import Layout from '../components/layout';
 
 class Creator extends Component {
   static async getInitialProps() {
@@ -7,8 +8,19 @@ class Creator extends Component {
     return {kickstarters};
   }
 
+  // renderKickstarters() {
+  //   const items = this.props.kickstarters
+  // }
+
   render() {
-    return <div>{this.props.kickstarters[0]}</div>
+    const items = this.props.kickstarters
+
+    return (
+      <Layout>
+        <h1> this is the body </h1>
+        <p>{items}</p>
+      </Layout>
+    );
   }
 }
 
