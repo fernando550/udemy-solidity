@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import creator from '../ethereum/creator';
 import Layout from '../components/layout';
 import { Card, Button } from 'semantic-ui-react';
+import { Link } from '../routes';
 
-class Creator extends Component {
+class HomePage extends Component {
   static async getInitialProps() {
     const kickstarters = await creator.methods.viewAllKickstarters().call();
     return {kickstarters};
@@ -13,7 +14,7 @@ class Creator extends Component {
     const items = this.props.kickstarters.map(address => {
       return {
         header: address,
-        description: <a>View</a>,
+        description: <Link route={`/kickstarters/${address}`}><a>View</a></Link>,
         fluid: true
       };
     });
@@ -27,11 +28,15 @@ class Creator extends Component {
     return (
       <Layout>
         <h3>All Campaigns</h3>
-        <Button
-          content='Create Kickstarter'
-          icon='add circle'
-          primary
-        />
+        <Link route='/kickstarters/new'>
+          <a>
+            <Button
+              content='Create Kickstarter'
+              icon='add circle'
+              primary
+            />
+          </a>
+        </Link>
         <hr/>
         <div>{this.renderKickstarters()}</div>
       </Layout>
@@ -39,4 +44,4 @@ class Creator extends Component {
   }
 }
 
-export default Creator;
+export default HomePage;

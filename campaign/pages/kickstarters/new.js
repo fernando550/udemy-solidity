@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import web3 from '../../ethereum/web3';
 import creator from '../../ethereum/creator';
 import Layout from '../../components/layout';
-import web3 from '../../ethereum/web3';
-import { Router } from '../../routes';
+import { Link, Router } from '../../routes';
 import { Form, Button, Input, Message } from 'semantic-ui-react';
 
-class Creator extends Component {
+class NewKickstarterPage extends Component {
   state = {
     minContribution:'',
     errorMessage: '',
@@ -53,4 +53,4 @@ class Creator extends Component {
   }
 }
 
-export default Creator;
+export default NewKickstarterPage;
