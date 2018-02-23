@@ -85,4 +85,18 @@ contract Kickstarter {
     myRequest.reqVendor.transfer(myRequest.reqCost);
     myRequest.reqCompletion = true;
   }
+
+  function getSummary() public view returns (uint, uint, uint, uint, address) {
+    return (
+        minContribution,
+        this.balance,
+        requests.length,
+        approversCount,
+        projectOwner
+    );
+  }
+
+  function getRequestCount() public view returns (uint) {
+    return requests.length;
+  }
 }
