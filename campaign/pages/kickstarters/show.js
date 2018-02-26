@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Layout from '../../components/layout';
 import Kickstarter from '../../ethereum/kickstarter';
-import { Card, Grid } from 'semantic-ui-react';
+import { Card, Grid, Button } from 'semantic-ui-react';
 import web3 from '../../ethereum/web3';
 import ContributeForm from '../../components/contributeForm';
+import { Link } from '../../routes';
 
 class ShowKickstarterPage extends Component {
   static async getInitialProps(props) {
@@ -18,7 +19,7 @@ class ShowKickstarterPage extends Component {
       approversCount: summary[3],
       projectOwner: summary[4]
     };
-  }
+  };
 
   renderKickstarter() {
     const items = [
@@ -55,23 +56,34 @@ class ShowKickstarterPage extends Component {
     ]
 
     return <Card.Group items={items} />;
-  }
+  };
 
   render() {
     return (
       <Layout>
         <h3>show page</h3>
         <Grid>
-          <Grid.Column width={10}>
-            {this.renderKickstarter()}
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <ContributeForm address={this.props.address}/>
-          </Grid.Column>
+          <Grid.Row>
+            <Grid.Column width={10}>
+              {this.renderKickstarter()}
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <ContributeForm address={this.props.address}/>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Link route={`/kickstarters/${this.props.address}/requests`}>
+                <a>
+                  <Button primary>View Requests</Button>
+                </a>
+              </Link>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </Layout>
     )
-  }
+  };
 }
 
 export default ShowKickstarterPage;
